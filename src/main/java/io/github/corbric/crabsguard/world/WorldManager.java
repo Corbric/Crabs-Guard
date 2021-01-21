@@ -3,6 +3,8 @@ package io.github.corbric.crabsguard.world;
 import io.github.corbric.crabsguard.CrabsGuard;
 import net.fabricmc.fabric.impl.base.util.ActionResult;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.s2c.play.BlockUpdateS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -25,12 +27,27 @@ public class WorldManager {
 
 	private ActionResult onItemUse(PlayerEntity playerEntity, ItemStack itemStack) {
 		ServerPlayerEntity player = (ServerPlayerEntity) playerEntity;
-		player.sendMessage(crabsGuard.config.failUseMessage);
-		return ActionResult.FAIL;
+		Item item = itemStack.getItem();
+		boolean cancel = false;
+
+		if (item instanceof BlockItem) {
+			cancel = true;
+		}
+
+		if (cancel) {
+			if(!crabsGuard.scheduledFailMessages.contains(player)) {
+				crabsGuard.scheduledFailMessages.add(player);
+			}
+			return ActionResult.FAIL;
+		} else {
+			return ActionResult.SUCCESS;
+		}
 	}
 
 	public ActionResult onBlockBreak(ServerPlayerEntity player, BlockPos pos) {
-		player.sendMessage(crabsGuard.config.failUseMessage);
+		if(!crabsGuard.scheduledFailMessages.contains(player)) {
+			crabsGuard.scheduledFailMessages.add(player);
+		}
 		player.networkHandler.sendPacket(new BlockUpdateS2CPacket(player.world, pos));
 		return ActionResult.FAIL;
 	}

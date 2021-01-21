@@ -10,7 +10,7 @@
   ],
 
   "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/crabsguard/icon.png",
 
   "environment": "*",
   "entrypoints": {
@@ -19,7 +19,7 @@
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "crabsguard.mixins.json"
   ],
 
   "depends": {
