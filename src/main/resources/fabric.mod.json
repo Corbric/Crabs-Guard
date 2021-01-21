@@ -15,7 +15,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "io.github.corbric.example.ExampleMod"
+      "io.github.corbric.crabsguard.CrabsGuard"
     ]
   },
   "mixins": [
