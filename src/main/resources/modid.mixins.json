@@ -4,6 +4,7 @@
   "package": "io.github.corbric.crabsguard.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "ServerPlayerInteractionManagerMixin"
   ],
   "client": [
   ],
