@@ -7,9 +7,9 @@ import net.minecraft.util.Formatting;
 
 public class CrabsGuardConfig {
 	public int configVersion = 1;
-
 	public int ticksPerDenialWave = 10;
 
+	public boolean sendFailMessage = true;
 	public Text failUseMessage = new LiteralText("Hey!")
 			.setStyle(new Style()
 					.setBold(true)

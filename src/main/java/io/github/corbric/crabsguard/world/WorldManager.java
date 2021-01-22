@@ -27,21 +27,25 @@ public class WorldManager {
 
 	private ActionResult onItemUse(PlayerEntity playerEntity, ItemStack itemStack) {
 		ServerPlayerEntity player = (ServerPlayerEntity) playerEntity;
-		Item item = itemStack.getItem();
-		boolean cancel = false;
+		if(itemStack != null) {
+			Item item = itemStack.getItem();
+			boolean cancel = false;
 
-		if (item instanceof BlockItem) {
-			cancel = true;
-		}
-
-		if (cancel) {
-			if(!crabsGuard.scheduledFailMessages.contains(player)) {
-				crabsGuard.scheduledFailMessages.add(player);
+			if (item instanceof BlockItem) {
+				cancel = true;
 			}
-			return ActionResult.FAIL;
-		} else {
-			return ActionResult.SUCCESS;
+
+			if (cancel) {
+				if(!crabsGuard.scheduledFailMessages.contains(player)) {
+					crabsGuard.scheduledFailMessages.add(player);
+				}
+				return ActionResult.FAIL;
+			} else {
+				return ActionResult.SUCCESS;
+			}
 		}
+		// Its fine to use Air
+		return ActionResult.SUCCESS;
 	}
 
 	public ActionResult onBlockBreak(ServerPlayerEntity player, BlockPos pos) {

@@ -5,6 +5,7 @@ import io.github.corbric.crabsguard.world.WorldManager;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.swifthq.swiftapi.callbacks.lifecycle.ReloadCallback;
 import net.swifthq.swiftapi.config.ConfigManager;
 
 import java.util.ArrayList;
@@ -24,19 +25,25 @@ public class CrabsGuard implements ModInitializer {
 		initializeConfig();
 		initializeManagers();
 		initializeCallbacks();
+		ReloadCallback.EVENT.register(() -> {
+			initializeConfig();
+			return 0;
+		});
 	}
 
 	private void initializeCallbacks() {
-		ServerTickEvents.END_SERVER_TICK.register(server -> {
-			ticksSinceLastWave++;
-			if(ticksSinceLastWave > config.ticksPerDenialWave) {
-				for (ServerPlayerEntity player : scheduledFailMessages) {
-					player.sendMessage(config.failUseMessage);
+		if (config.sendFailMessage) {
+			ServerTickEvents.END_SERVER_TICK.register(server -> {
+				ticksSinceLastWave++;
+				if (ticksSinceLastWave > config.ticksPerDenialWave) {
+					for (ServerPlayerEntity player : scheduledFailMessages) {
+						player.sendMessage(config.failUseMessage);
+					}
+					scheduledFailMessages.clear();
+					ticksSinceLastWave = 0;
 				}
-				scheduledFailMessages.clear();
-				ticksSinceLastWave = 0;
-			}
-		});
+			});
+		}
 	}
 
 	private void initializeManagers() {
@@ -48,6 +55,4 @@ public class CrabsGuard implements ModInitializer {
 		config = optional.orElseGet(CrabsGuardConfig::new);
 		ConfigManager.write("config", config);
 	}
-
-
 }
