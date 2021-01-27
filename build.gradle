@@ -38,7 +38,7 @@ dependencies {
 	}
 
 	//Corbric libraries to help with server side dev
-	modImplementation 'com.github.Corbric:SwiftAPI:a8311b1397'
+	modImplementation 'com.github.Corbric:SwiftAPI:44d834b88d'
 
 	if (System.getProperty("os.name").toLowerCase().contains("mac")) {
 		implementation 'org.lwjgl.lwjgl:lwjgl_util:2.9.4-nightly-20150209'

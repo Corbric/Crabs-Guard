@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(ServerPlayerInteractionManager.class)
 public class ServerPlayerInteractionManagerMixin {
 
-	@Inject(method = "method_6090", at = @At("HEAD")) // Some sortof sword block method?
+	@Inject(method = "interactItem", at = @At("HEAD"))
 	private void test(PlayerEntity playerEntity, World world, ItemStack itemStack, CallbackInfoReturnable<Boolean> cir) {
 		//TODO: look into this
 	}

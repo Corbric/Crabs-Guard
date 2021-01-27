@@ -1,5 +1,6 @@
 package io.github.corbric.crabsguard;
 
+import io.github.corbric.crabsguard.command.Commands;
 import io.github.corbric.crabsguard.config.CrabsGuardConfig;
 import io.github.corbric.crabsguard.world.WorldManager;
 import net.fabricmc.api.ModInitializer;
@@ -22,6 +23,7 @@ public class CrabsGuard implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		Commands.initialize();
 		initializeConfig();
 		initializeManagers();
 		initializeCallbacks();
