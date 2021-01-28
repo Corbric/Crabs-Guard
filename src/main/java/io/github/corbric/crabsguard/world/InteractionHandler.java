@@ -1,6 +1,7 @@
 package io.github.corbric.crabsguard.world;
 
 import io.github.corbric.crabsguard.CrabsGuard;
+import io.github.corbric.crabsguard.region.Region;
 import net.fabricmc.fabric.impl.base.util.ActionResult;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
@@ -11,14 +12,16 @@ import net.minecraft.util.math.BlockPos;
 import net.swifthq.swiftapi.callbacks.entity.player.ItemInteractCallback;
 import net.swifthq.swiftapi.callbacks.world.BlockBreakCallback;
 
+import java.util.List;
+
 /**
  * Used to manage interactions within the world
  */
-public class WorldManager {
+public class InteractionHandler {
 
 	private final CrabsGuard crabsGuard;
 
-	public WorldManager(CrabsGuard crabsGuard) {
+	public InteractionHandler(CrabsGuard crabsGuard) {
 		this.crabsGuard = crabsGuard;
 		BlockBreakCallback.EVENT.register(this::onBlockBreak);
 		ItemInteractCallback.EVENT.register(this::onItemUse);
